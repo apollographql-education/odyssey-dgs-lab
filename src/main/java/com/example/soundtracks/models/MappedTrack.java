@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class MappedTrack extends Track {
     @JsonSetter("track")
     public void setTrackProperties(JsonNode trackObject) {
+        this.setArtistId(trackObject.get("artists").get(0).get("id").asText());
         this.setId(trackObject.get("id").asText());
         this.setName(trackObject.get("name").asText());
         this.setDurationMs(trackObject.get("duration_ms").asInt());
@@ -17,5 +18,15 @@ public class MappedTrack extends Track {
 
     public Track getTrack() {
         return this;
+    }
+
+    private String artistId;
+
+    public void setArtistId(String artistId) {
+        this.artistId = artistId;
+    }
+
+    public String getArtistId() {
+        return this.artistId;
     }
 }

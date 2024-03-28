@@ -3,6 +3,7 @@ package com.example.soundtracks.datasources;
 import com.example.soundtracks.models.MappedPlaylist;
 import com.example.soundtracks.models.PlaylistCollection;
 import com.example.soundtracks.models.Snapshot;
+import com.example.soundtracks.models.MappedArtist;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -26,6 +27,15 @@ public class SpotifyClient {
                 .uri("/playlists/{playlist_id}", playlistId)
                 .retrieve()
                 .body(MappedPlaylist.class);
+    }
+
+    public MappedArtist artistRequest(String artistId) {
+        System.out.println("I am making a request to the artists endpoint for " + artistId);
+        return client
+                .get()
+                .uri("/artists/{artist_id}", artistId)
+                .retrieve()
+                .body(MappedArtist.class);
     }
 
     public Snapshot addItemsToPlaylist(String playlistId, String uris) {

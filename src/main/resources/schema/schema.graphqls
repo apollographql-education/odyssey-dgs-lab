@@ -10,6 +10,7 @@ type Playlist {
     tracks: [Track!]!
 }
 
+
 "A single audio file, usually a song."
 type Track {
     "The ID for the track."
@@ -22,6 +23,21 @@ type Track {
     explicit: Boolean!
     "The URI for the track, usually a Spotify link."
     uri: String!
+    "The artist for the track"
+    artist: Artist
+}
+
+type Artist {
+    "The ID for the artist."
+    id: ID!
+    "The name of the artist"
+    name: String
+    "The number of followers the artist has"
+    followers: Int
+    "A collection of genres that can be ascribed to this artist"
+    genres: [String]
+    "The URI for the artist, usually a Spotify link"
+    uri: String
 }
 
 type Query {
