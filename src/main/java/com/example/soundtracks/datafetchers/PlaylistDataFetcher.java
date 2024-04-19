@@ -1,5 +1,6 @@
 package com.example.soundtracks.datafetchers;
 import com.example.soundtracks.datasources.SpotifyClient;
+import com.example.soundtracks.generated.types.Track;
 import com.example.soundtracks.models.MappedPlaylist;
 import com.example.soundtracks.models.PlaylistCollection;
 import com.example.soundtracks.models.Snapshot;
@@ -34,6 +35,19 @@ public class PlaylistDataFetcher {
     @DgsQuery
     public MappedPlaylist playlist(@InputArgument String id) {
         return spotifyClient.playlistRequest(id);
+    }
+
+    @DgsData(parentType = "Playlist")
+    public List<Track> tracks(DgsDataFetchingEnvironment dfe) {
+        MappedPlaylist playlist = dfe.getSource();
+        String id = playlist.getId();
+        List<Track> tracks = playlist.getTracks();
+
+        if (tracks != null) {
+            return tracks;
+        } else {
+            return spotifyClient.tracksRequest(id);
+        }
     }
 
     @DgsMutation
